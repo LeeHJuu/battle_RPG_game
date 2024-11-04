@@ -16,6 +16,7 @@ void main(List < String > args) {
     game.startGame();
 }
 
+// TODO: 파일 읽기 비동기 처리
 // 몬스터 스탯 읽어와 생성하는 메서드
 List<Monster> load_monster_stats() {
     List<Monster> monster_list = [];
@@ -37,6 +38,7 @@ List<Monster> load_monster_stats() {
     return monster_list;
 }
 
+// TODO: 파일 읽기 비동기 처리
 // 캐릭터 스탯 읽어와 생성하는 메서드
 Character load_character_stats() {
     // 캐릭터 스탯 로드

@@ -20,6 +20,6 @@ class Monster {
 
   void showStatus() {
     // 체력과 공격력 출력.
-    print("${this.name} - 체력: ${this.strength}, 공격력: ${this.max_offense}");
+    print("${name} - 체력: ${strength}, 공격력: ${max_offense}");
   }
 }

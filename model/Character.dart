@@ -23,7 +23,6 @@ class Character {
 
   void showStatus() {
     // 캐릭터의 현재 체력, 공격력, 방어력 출력
-    print(
-        "${this.name} - 체력: ${this.strength}, 공격력: ${this.offense}, 방어력: ${this.defence}");
+    print("${name} - 체력: ${strength}, 공격력: ${offense}, 방어력: ${defence}");
   }
 }
