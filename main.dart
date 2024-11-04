@@ -3,6 +3,7 @@ import 'dart:io';
 import 'model/Character.dart';
 import 'model/Game.dart';
 import 'model/Monster.dart';
+import 'path.dart';
 
 void main(List < String > args) {
     // 캐릭터 이름 설정, 스탯 읽어오기 등 설정.
@@ -22,7 +23,7 @@ List<Monster> load_monster_stats() {
     List<Monster> monster_list = [];
 
     // 몬스터 스탯 로드
-    final file = File('battle_RPG_game/monsters.txt');
+    final file = File(monsters_txt);
     final content = file.readAsStringSync();
 
     final line = content
@@ -42,7 +43,7 @@ List<Monster> load_monster_stats() {
 // 캐릭터 스탯 읽어와 생성하는 메서드
 Character load_character_stats() {
     // 캐릭터 스탯 로드
-    final file = File('battle_RPG_game/characters.txt');
+    final file = File(characters_txt);
     final content = file.readAsStringSync();
     final stats = content
         .split(',')

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import '../path.dart';
 import 'Character.dart';
 import 'Monster.dart';
 
@@ -43,7 +44,6 @@ class Game {
     battle();
   }
 
-  // TODO: 전투가 종료될때까지 턴을 반복하기.
   // 전투를 진행하는 메서드
   void battle() {
     var state = 0;
@@ -51,6 +51,7 @@ class Game {
     // 전투 턴을 무한히 반복. 조건이 만족되면 break로 빠져나오기.
     while (state == 0) {
       // 캐릭터 선공
+      // TODO: 공격과 방어 중 선택하여 행동하도록.
       character.attackMonster(picked_monster!);
 
       if (picked_monster!.strength <= 0) {
@@ -99,6 +100,12 @@ class Game {
 
     switch (userInput) {
       case "y":
+        String result =
+            "${character.name} - 남은 체력: ${character.strength}, 게임 결과: ${i == 0 ? "패배" : "승리"}";
+
+        File file = File(result_txt);
+        file.writeAsStringSync(result);
+
         print("저장되었습니다.");
 
       case "n":
@@ -106,15 +113,7 @@ class Game {
 
       default:
         print("잘못된 입력입니다.");
-    }
-
-    String result;
-
-    switch (i) {
-      case 0:
-        result = "패배";
-      case 1:
-        result = "승리";
+        finishGame(i);
     }
   }
 }
