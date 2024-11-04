@@ -16,6 +16,11 @@ class Monster {
   void attackCharacter(Character character) {
     // 캐릭터를 공격.
     // 데미지 = 몬스터 공격력 - 캐릭터 방어력. 최소 0 이상.
+    int damage = max_offense - character.defence;
+    character.strength -= damage;
+
+    print("$name이(가) ${character.name}에게 $damage의 데미지를 입혔습니다.");
+    character.showStatus();
   }
 
   void showStatus() {

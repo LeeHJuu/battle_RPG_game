@@ -15,6 +15,11 @@ class Character {
 
   void attackMonster(Monster monster) {
     // 몬스터 공격
+    int damage = offense;
+    monster.strength -= damage;
+
+    print("$name이(가) ${monster.name}에게 $damage의 데미지를 입혔습니다.");
+    monster.showStatus();
   }
 
   void defend() {
