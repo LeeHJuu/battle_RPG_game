@@ -8,15 +8,20 @@ class Game {
 
   Game(this.character, this.monster_list, this.defeated_monster);
 
-  void startGame(){
+  @override
+  String toString() {
+    return 'Game{character: $character, monsterList: $monster_list, defeatedMonster: $defeated_monster}';
+  }
+
+  void startGame() {
     // 게임을 시작하는 메서드
   }
 
-  void battle(){
+  void battle() {
     // 전투를 진행하는 메서드
   }
 
-  void getRandomMonster(){
+  void getRandomMonster() {
     // 랜덤으로 몬스터를 불러오는 메서드
   }
 }

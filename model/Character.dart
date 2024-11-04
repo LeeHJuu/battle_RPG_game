@@ -8,6 +8,11 @@ class Character {
 
   Character(this.name, this.strength, this.offense, this.defence);
 
+  @override
+  String toString() {
+    return 'Character{name: $name, strength: $strength, offense: $offense, defence: $defence}';
+  }
+
   void attackMonster(Monster monster) {
     // 몬스터 공격
   }
@@ -18,6 +23,7 @@ class Character {
 
   void showStatus() {
     // 캐릭터의 현재 체력, 공격력, 방어력 출력
-    print("${this.name} - 체력: ${this.strength}, 공격력: ${this.offense}, 방어력: ${this.defence}");
+    print(
+        "${this.name} - 체력: ${this.strength}, 공격력: ${this.offense}, 방어력: ${this.defence}");
   }
 }
