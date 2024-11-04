@@ -92,7 +92,6 @@ class Game {
     }
   }
 
-  // TODO: 게임 종료 함수 완성하기.
   // 게임을 종료하는 메서드
   void finishGame(int i) {
     print("게임 결과를 저장하시겠습니까? (y/n)");
