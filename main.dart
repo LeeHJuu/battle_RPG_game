@@ -54,7 +54,7 @@ Character load_character_stats() {
         .map((e) => int.parse(e));
 
     // 캐릭터 이름 입력
-    var name = stdin.readLineSync(encoding : Encoding.getByName('utf-8')!);
+    var name = inputName();
 
     return Character(
         name !,
@@ -62,4 +62,26 @@ Character load_character_stats() {
         stats.elementAt(1),
         stats.elementAt(2)
     );
+}
+
+// 캐릭터 이름 입력, 정규표현식에 따라 이름을 제한하는 메서드.
+String inputName(){
+    var pass = false;
+    RegExp regex = RegExp(r'^[a-zA-Z가-힣]+$');
+    var name = "";
+
+    print("캐릭터 이름을 입력해주세요.");
+    
+    while(!pass) {
+        var input = stdin.readLineSync();
+
+        if(regex.hasMatch(input!)){
+            name = input;
+            pass = true;
+        } else {
+            print("잘못된 입력입니다. 특수문자나 숫자를 허용하지 않습니다.");
+        }
+    }
+    
+    return name;
 }
