@@ -7,6 +7,7 @@ class Character {
   int strength;
   int offense;
   int defence;
+  bool defenceMode = false;
 
   Character(this.name, this.strength, this.offense, this.defence);
 
@@ -37,6 +38,9 @@ class Character {
 
   void defend() {
     // TODO: 방어 시 특정 행동을 수행
+    // 방어 시 해당 턴에서 받는 데미지 대폭 감소.
+    defenceMode = true;
+    print("방어 태세를 취합니다. 이번 공격에서 받는 데미지가 감소합니다.");
   }
 
   void showStatus() {

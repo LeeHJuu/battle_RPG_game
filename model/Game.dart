@@ -121,14 +121,19 @@ void selectOne(String desc, List<Selectoption> selectOptions) {
   print("\n" + desc);
   var userInput = stdin.readLineSync();
 
-  if (userInput == selectOptions.first.input) {
-    // 선택지 1 입력. output 1 출력.
-    selectOptions.first.output();
-  } else if (userInput == selectOptions.last.input) {
-    // 선택지 2 입력. output 2 출력.
-    selectOptions.last.output();
-  } else {
-    // 재귀함수로 재입력 진행.
+  bool validInput = false;
+
+  // 선택지에 맞는 output 실행.
+  selectOptions.forEach((option) {
+    if (userInput == option.input) {
+      option.output();
+      validInput = true;
+      return;
+    }
+  });
+
+  // 재귀함수로 재입력 진행.
+  if (!validInput) {
     print("잘못된 입력입니다. 다시 입력해주세요.");
     selectOne(desc, selectOptions);
   }

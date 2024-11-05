@@ -20,6 +20,12 @@ class Monster {
     // 데미지 = 몬스터 공격력 - 캐릭터 방어력. 최소 0 이상.
     int damage = Random().nextInt(max_offense) - character.defence;
     damage = damage > 0 ? damage : 0;
+
+    // 캐릭터 방어 선택시 데미지 감소
+    if(character.defenceMode){
+      damage ~/= 10;
+      character.defenceMode = false;
+    }
     
     character.strength -= damage;
 
