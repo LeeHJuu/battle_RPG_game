@@ -8,6 +8,9 @@ import 'path.dart';
 void main(List < String > args) {
     // 캐릭터 이름 설정, 스탯 읽어오기 등 설정.
     Character character = load_character_stats();
+    character.getBonusHP();
+    
+    // 몬스터 불러오기
     List<Monster> monster_list = load_monster_stats();
 
     // 게임 초기화

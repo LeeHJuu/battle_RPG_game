@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'Monster.dart';
 
 class Character {
@@ -13,6 +15,15 @@ class Character {
     return 'Character{name: $name, strength: $strength, offense: $offense, defence: $defence}';
   }
 
+  void getBonusHP() {
+    int random = Random().nextInt(10);
+
+    if (random > 3) {
+      strength += 10;
+      print('보너스 체력을 얻었습니다! 현재 체력: ${strength}');
+    }
+  }
+
   void attackMonster(Monster monster) {
     // 몬스터 공격
     int damage = offense;
@@ -23,7 +34,7 @@ class Character {
   }
 
   void defend() {
-    // 방어 시 특정 행동을 수행
+    // TODO: 방어 시 특정 행동을 수행
   }
 
   void showStatus() {
