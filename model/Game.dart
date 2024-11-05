@@ -11,6 +11,7 @@ class Game {
   List<Monster> monster_list;
   Monster? picked_monster;
   int defeated_monster;
+  int turn = 0;
 
   Game(this.character, this.monster_list, this.defeated_monster);
 
@@ -51,8 +52,15 @@ class Game {
 
     // 전투 턴을 무한히 반복. 조건이 만족되면 break로 빠져나오기.
     while (state == 0) {
+      // 턴 수 증가.
+      turn++;
+      // 3턴마다 방어력 증가.(3번째 턴이 지난 후, 4, 7, 10턴 등이 해당.)
+      if (turn % 3 == 1 && turn > 3) {
+        picked_monster!.defenceUP();
+      }
+
       // 캐릭터 선공
-      print("\n${character.name}의 턴");
+      print("\n- ${character.name}의 턴 -");
 
       selectOne("행동을 선택하세요 (1: 공격, 2: 방어)", [
         Selectoption("1", () => character.attackMonster(picked_monster!)),
@@ -65,7 +73,7 @@ class Game {
       }
 
       // 몬스터 후공
-      print("\n${picked_monster!.name}의 턴");
+      print("\n- ${picked_monster!.name}의 턴 -\n");
       picked_monster!.attackCharacter(character);
 
       if (character.strength <= 0) {
@@ -75,8 +83,10 @@ class Game {
     }
 
     // 전투 종료 후 state 인덱스별로 다른 코드 실행.
-
     if (state == 1) {
+      // 몬스터 체력 소진. 턴 수 초기화.
+      turn = 0;
+
       selectOne("${picked_monster!.name}을(를) 물리쳤습니다!\n다음 몬스터와 싸우겠습니까? (y/n)", [
         Selectoption("y", () => getRandomMonster()),
         Selectoption("n", () => finishGame(0))
@@ -105,15 +115,20 @@ class Game {
   }
 }
 
+// 선택지 입력 및 행동 진행 함수.
+// 공통되는 코드가 많아 함수화 진행.
 void selectOne(String desc, List<Selectoption> selectOptions) {
   print("\n" + desc);
   var userInput = stdin.readLineSync();
 
   if (userInput == selectOptions.first.input) {
+    // 선택지 1 입력. output 1 출력.
     selectOptions.first.output();
   } else if (userInput == selectOptions.last.input) {
+    // 선택지 2 입력. output 2 출력.
     selectOptions.last.output();
   } else {
+    // 재귀함수로 재입력 진행.
     print("잘못된 입력입니다. 다시 입력해주세요.");
     selectOne(desc, selectOptions);
   }

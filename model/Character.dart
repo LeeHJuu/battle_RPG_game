@@ -18,7 +18,7 @@ class Character {
   void getBonusHP() {
     int random = Random().nextInt(10);
 
-    if (random > 3) {
+    if (random < 3) {
       strength += 10;
       print('보너스 체력을 얻었습니다! 현재 체력: ${strength}');
     }
@@ -26,7 +26,9 @@ class Character {
 
   void attackMonster(Monster monster) {
     // 몬스터 공격
-    int damage = offense;
+    int damage = offense - monster.defence;
+    damage = damage > 0 ? damage : 0;
+    
     monster.strength -= damage;
 
     print("$name이(가) ${monster.name}에게 $damage의 데미지를 입혔습니다.");

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'model/Character.dart';
@@ -53,7 +54,7 @@ Character load_character_stats() {
         .map((e) => int.parse(e));
 
     // 캐릭터 이름 입력
-    var name = stdin.readLineSync();
+    var name = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
 
     return Character(
         name !,
