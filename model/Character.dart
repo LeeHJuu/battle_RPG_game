@@ -7,7 +7,9 @@ class Character {
   int strength;
   int offense;
   int defence;
-  bool defenceMode = false;
+
+  int mode = 0; // 0: 기본, 1: 방어모드, 2: 아이템 사용
+  bool usedItem = false; // 아이템 소진 여부
 
   Character(this.name, this.strength, this.offense, this.defence);
 
@@ -25,10 +27,22 @@ class Character {
     }
   }
 
+  void useItem(){
+    print("아이템을 사용했습니다. 이번 턴에서의 공격력이 2배가 됩니다.");
+    mode = 2;
+    usedItem = true;
+  }
+
   void attackMonster(Monster monster) {
     // 몬스터 공격
     int damage = offense - monster.defence;
     damage = damage > 0 ? damage : 0;
+
+    // 아이템 사용 확인
+    if(mode == 2){
+      damage *= 2;
+      print("강력한 공격을 행합니다.");
+    }
     
     monster.strength -= damage;
 
@@ -37,9 +51,8 @@ class Character {
   }
 
   void defend() {
-    // TODO: 방어 시 특정 행동을 수행
     // 방어 시 해당 턴에서 받는 데미지 대폭 감소.
-    defenceMode = true;
+    mode = 1;
     print("방어 태세를 취합니다. 이번 공격에서 받는 데미지가 감소합니다.");
   }
 

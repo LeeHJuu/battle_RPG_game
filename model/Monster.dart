@@ -22,9 +22,9 @@ class Monster {
     damage = damage > 0 ? damage : 0;
 
     // 캐릭터 방어 선택시 데미지 감소
-    if(character.defenceMode){
+    if(character.mode == 1){
       damage ~/= 10;
-      character.defenceMode = false;
+      character.mode = 0;
     }
     
     character.strength -= damage;

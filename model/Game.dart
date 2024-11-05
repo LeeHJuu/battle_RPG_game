@@ -62,11 +62,28 @@ class Game {
       // 캐릭터 선공
       print("\n- ${character.name}의 턴 -");
 
-      selectOne("행동을 선택하세요 (1: 공격, 2: 방어)", [
+      var desc = "행동을 선택하세요 (1: 공격, 2: 방어)";
+      var selectOptions = [
         Selectoption("1", () => character.attackMonster(picked_monster!)),
         Selectoption("2", () => character.defend())
-      ]);
+      ];
 
+      // 아이템을 선택하는 선택지. 선택 후 공격/방어 행동 재선택.
+      var selectItem = Selectoption("3", () {
+        character.useItem();
+        selectOne(desc, selectOptions);
+      });
+
+      // 아이템을 사용한 경우 selectItem 선택지를 제외하고 selectOne 함수 실행.
+      if (character.usedItem) {
+        selectOne(desc, selectOptions);
+      } else {
+        var copyOptions = [...selectOptions];
+        copyOptions.add(selectItem);
+        selectOne("행동을 선택하세요 (1: 공격, 2: 방어, 3: 아이템 사용)", copyOptions);
+      }
+
+      // 체력소진 확인
       if (picked_monster!.strength <= 0) {
         state = 1;
         break;
@@ -76,6 +93,7 @@ class Game {
       print("\n- ${picked_monster!.name}의 턴 -\n");
       picked_monster!.attackCharacter(character);
 
+      // 체력소진 확인
       if (character.strength <= 0) {
         state = 2;
         break;
