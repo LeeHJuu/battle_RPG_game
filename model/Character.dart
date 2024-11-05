@@ -42,6 +42,7 @@ class Character {
     if(mode == 2){
       damage *= 2;
       print("강력한 공격을 행합니다.");
+      mode = 0;
     }
     
     monster.strength -= damage;
