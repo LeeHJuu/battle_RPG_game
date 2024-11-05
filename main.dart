@@ -10,7 +10,7 @@ void main(List < String > args) {
     // 캐릭터 이름 설정, 스탯 읽어오기 등 설정.
     Character character = load_character_stats();
     character.getBonusHP();
-    
+
     // 몬스터 불러오기
     List<Monster> monster_list = load_monster_stats();
 
@@ -19,6 +19,7 @@ void main(List < String > args) {
 
     game.startGame();
 }
+
 
 // TODO: 파일 읽기 비동기 처리
 // 몬스터 스탯 읽어와 생성하는 메서드
@@ -29,7 +30,7 @@ List<Monster> load_monster_stats() {
     final file = File(monsters_txt);
     final content = file.readAsStringSync();
 
-    final line = content
+    content
         .split("\n")
         .forEach((e) {
             var stats = e.split(',');
@@ -53,7 +54,7 @@ Character load_character_stats() {
         .map((e) => int.parse(e));
 
     // 캐릭터 이름 입력
-    var name = stdin.readLineSync(encoding: Encoding.getByName('utf-8')!);
+    var name = stdin.readLineSync(encoding : Encoding.getByName('utf-8')!);
 
     return Character(
         name !,
