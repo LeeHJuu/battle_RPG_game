@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'model/Character.dart';
@@ -57,7 +56,7 @@ Character load_character_stats() {
     var name = inputName();
 
     return Character(
-        name !,
+        name,
         stats.elementAt(0),
         stats.elementAt(1),
         stats.elementAt(2)

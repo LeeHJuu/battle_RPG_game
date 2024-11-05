@@ -31,12 +31,12 @@ class Game {
 
   // 랜덤으로 몬스터를 불러오는 메서드
   void getRandomMonster() {
-    // 랜덤 몬스터 선택
+    // 랜덤 몬스터 선택. 후의 전투로 monster_list 원본이 수정되지 않도록 copy.
     int randomIdx = Random().nextInt(monster_list.length);
-    picked_monster = monster_list.elementAt(randomIdx);
+    picked_monster = monster_list.elementAt(randomIdx).copy();
 
     // 중복선택 방지. 선택된 몬스터 대기열에서 제거.
-    monster_list.removeAt(randomIdx);
+    // monster_list.removeAt(randomIdx);
 
     // 몬스터 출력
     print("\n새로운 몬스터가 나타났습니다!");
@@ -103,6 +103,7 @@ class Game {
     // 전투 종료 후 state 인덱스별로 다른 코드 실행.
     if (state == 1) {
       // 몬스터 체력 소진. 턴 수 초기화.
+      defeated_monster++;
       turn = 0;
 
       selectOne("${picked_monster!.name}을(를) 물리쳤습니다!\n다음 몬스터와 싸우겠습니까? (y/n)", [
@@ -121,7 +122,7 @@ class Game {
     selectOne("게임 결과를 저장하시겠습니까? (y/n)", [
       Selectoption("y", () {
         String result =
-            "${character.name} - 남은 체력: ${character.strength}, 게임 결과: ${i == 1 ? "패배" : "승리"}";
+            "${character.name} - 남은 체력: ${character.strength}, 게임 결과: ${i == 1 ? "패배" : "승리"}, 쓰러트린 몬스터 수: ${defeated_monster}, 성장 레벨: ${character.level}";
 
         File file = File(result_txt);
         file.writeAsStringSync(result);

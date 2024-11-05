@@ -10,6 +10,11 @@ class Monster {
 
   Monster(this.name, this.strength, this.max_offense);
 
+  // 랜덤 몬스터 선택 시, 후의 전투로 monster_list 원본이 수정되지 않도록 copy.
+  Monster copy(){
+    return Monster(this.name, this.strength, this.max_offense);
+  }
+
   @override
   String toString() {
     return 'Monster{name: $name, strength: $strength, maxOffense: $max_offense, defence: $defence}';

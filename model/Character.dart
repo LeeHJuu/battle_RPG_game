@@ -11,6 +11,8 @@ class Character {
   int mode = 0; // 0: 기본, 1: 방어모드, 2: 아이템 사용
   bool usedItem = false; // 아이템 소진 여부
 
+  int level = 0;
+
   Character(this.name, this.strength, this.offense, this.defence);
 
   @override
@@ -31,6 +33,12 @@ class Character {
     print("아이템을 사용했습니다. 이번 턴에서의 공격력이 2배가 됩니다.");
     mode = 2;
     usedItem = true;
+  }
+
+  // TODO: 캐릭터 레벨업 시스템.
+  void levelUp(){
+    // 몬스터를 물리칠 때마다 체력/공격력/방어력 중 랜덤요소 증가.
+
   }
 
   void attackMonster(Monster monster) {
