@@ -16,7 +16,6 @@ void main(List < String > args) {
 
     // 게임 초기화
     Game game = Game(character, monster_list, 0);
-    print(game.toString());
 
     game.startGame();
 }
