@@ -59,29 +59,9 @@ class Game {
         picked_monster!.defenceUP();
       }
 
-      // 캐릭터 선공
-      print("\n- ${character.name}의 턴 -");
-
-      var desc = "행동을 선택하세요 (1: 공격, 2: 방어)";
-      var selectOptions = [
-        Selectoption("1", () => character.attackMonster(picked_monster!)),
-        Selectoption("2", () => character.defend())
-      ];
-
-      // 아이템을 선택하는 선택지. 선택 후 공격/방어 행동 재선택.
-      var selectItem = Selectoption("3", () {
-        character.useItem();
-        selectOne(desc, selectOptions);
-      });
-
-      // 아이템을 사용한 경우 selectItem 선택지를 제외하고 selectOne 함수 실행.
-      if (character.usedItem) {
-        selectOne(desc, selectOptions);
-      } else {
-        var copyOptions = [...selectOptions];
-        copyOptions.add(selectItem);
-        selectOne("행동을 선택하세요 (1: 공격, 2: 방어, 3: 아이템 사용)", copyOptions);
-      }
+      // 캐릭터 선공.
+      // 길이가 길어 함수로 내보냄.
+      characterTurn();
 
       // 체력소진 확인
       if (picked_monster!.strength <= 0) {
@@ -131,6 +111,32 @@ class Game {
       }),
       Selectoption("n", () => print("게임 결과를 저장하지 않습니다."))
     ]);
+  }
+
+  // 캐릭터의 턴을 진행.
+  void characterTurn() {
+    print("\n- ${character.name}의 턴 -");
+
+    var desc = "행동을 선택하세요 (1: 공격, 2: 방어)";
+    var selectOptions = [
+      Selectoption("1", () => character.attackMonster(picked_monster!)),
+      Selectoption("2", () => character.defend())
+    ];
+
+    // 아이템을 선택하는 선택지. 선택 후 공격/방어 행동 재선택.
+    var selectItem = Selectoption("3", () {
+      character.useItem();
+      selectOne(desc, selectOptions);
+    });
+
+    // 아이템을 사용한 경우 selectItem 선택지를 제외하고 selectOne 함수 실행.
+    if (character.usedItem) {
+      selectOne(desc, selectOptions);
+    } else {
+      var copyOptions = [...selectOptions];
+      copyOptions.add(selectItem);
+      selectOne("행동을 선택하세요 (1: 공격, 2: 방어, 3: 아이템 사용)", copyOptions);
+    }
   }
 }
 
