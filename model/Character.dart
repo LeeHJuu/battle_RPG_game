@@ -35,7 +35,6 @@ class Character {
     usedItem = true;
   }
 
-  // TODO: 캐릭터 레벨업 시스템.
   void levelUp() {
     // 몬스터를 물리칠 때마다 체력/공격력/방어력 중 랜덤요소 증가.
     level++;

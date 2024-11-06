@@ -11,7 +11,9 @@ class Game {
   List<Monster> monster_list;
   Monster? picked_monster;
   int defeated_monster;
+
   int turn = 0;
+  bool autoMode = false;
 
   Game(this.character, this.monster_list, this.defeated_monster);
 
@@ -61,7 +63,11 @@ class Game {
 
       // 캐릭터 선공.
       // 길이가 길어 함수로 내보냄.
-      characterTurn();
+      if (autoMode) {
+        character.attackMonster(picked_monster!);
+      } else {
+        characterTurn();
+      }
 
       // 체력소진 확인
       if (picked_monster!.strength <= 0) {
@@ -86,13 +92,21 @@ class Game {
       defeated_monster++;
       turn = 0;
 
-      selectOne("${picked_monster!.name}을(를) 물리쳤습니다!\n다음 몬스터와 싸우겠습니까? (y/n)", [
-        Selectoption("y", () {
-          character.levelUp();
-          getRandomMonster();
-        }),
-        Selectoption("n", () => finishGame(0))
-      ]);
+      if (autoMode) {
+        print("\n${picked_monster!.name}을 물리쳤습니다! 다음 몬스터를 불러옵니다.");
+        // NOTE: 캐릭터가 너무 강해져서 전투가 끝나지 않음.
+        // character.levelUp();
+        getRandomMonster();
+      } else {
+        selectOne(
+            "${picked_monster!.name}을(를) 물리쳤습니다!\n다음 몬스터와 싸우겠습니까? (y/n)", [
+          Selectoption("y", () {
+            character.levelUp();
+            getRandomMonster();
+          }),
+          Selectoption("n", () => finishGame(0))
+        ]);
+      }
     }
     if (state == 2) {
       // 캐릭터 체력이 소진되어 게임 종료.
@@ -105,7 +119,7 @@ class Game {
     selectOne("게임 결과를 저장하시겠습니까? (y/n)", [
       Selectoption("y", () {
         String result =
-            "${character.name} - 남은 체력: ${character.strength}, 게임 결과: ${i == 1 ? "패배" : "승리"}, 쓰러트린 몬스터 수: ${defeated_monster}, 성장 레벨: ${character.level}";
+            "${character.name} - 남은 체력: ${character.strength}, 게임 결과: ${i == 1 ? "패배" : "승리"}, 쓰러트린 몬스터 수: ${defeated_monster}";
 
         File file = File(result_txt);
         file.writeAsStringSync(result);
@@ -120,8 +134,10 @@ class Game {
   void characterTurn() {
     print("\n- ${character.name}의 턴 -");
 
-    var desc = "행동을 선택하세요 (1: 공격, 2: 방어)";
+    var desc =
+        "행동을 선택하세요 (0: ${autoMode ? "자동진행 끄기" : "자동진행 켜기"}, 1: 공격, 2: 방어)";
     var selectOptions = [
+      Selectoption("0", () => autoPlay()),
       Selectoption("1", () => character.attackMonster(picked_monster!)),
       Selectoption("2", () => character.defend())
     ];
@@ -138,8 +154,17 @@ class Game {
     } else {
       var copyOptions = [...selectOptions];
       copyOptions.add(selectItem);
-      selectOne("행동을 선택하세요 (1: 공격, 2: 방어, 3: 아이템 사용)", copyOptions);
+      selectOne(
+          "행동을 선택하세요 (0: ${autoMode ? "자동진행 끄기" : "자동진행 켜기"}, 1: 공격, 2: 방어, 3: 아이템 사용)",
+          copyOptions);
     }
+  }
+
+  // 자동전투 시작 메서드
+  void autoPlay() {
+    print("자동전투를 시작합니다.");
+    autoMode = true;
+    character.attackMonster(picked_monster!);
   }
 }
 
