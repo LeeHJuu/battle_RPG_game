@@ -87,7 +87,10 @@ class Game {
       turn = 0;
 
       selectOne("${picked_monster!.name}을(를) 물리쳤습니다!\n다음 몬스터와 싸우겠습니까? (y/n)", [
-        Selectoption("y", () => getRandomMonster()),
+        Selectoption("y", () {
+          character.levelUp();
+          getRandomMonster();
+        }),
         Selectoption("n", () => finishGame(0))
       ]);
     }

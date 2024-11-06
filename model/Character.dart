@@ -29,16 +29,35 @@ class Character {
     }
   }
 
-  void useItem(){
+  void useItem() {
     print("아이템을 사용했습니다. 이번 턴에서의 공격력이 2배가 됩니다.");
     mode = 2;
     usedItem = true;
   }
 
   // TODO: 캐릭터 레벨업 시스템.
-  void levelUp(){
+  void levelUp() {
     // 몬스터를 물리칠 때마다 체력/공격력/방어력 중 랜덤요소 증가.
+    int randomIdx = Random().nextInt(3);
 
+    switch (randomIdx) {
+      case 0:
+        var statUp = 10;
+        strength += statUp;
+        print("${name}의 체력이 ${statUp}만큼 올랐습니다. 현재 체력: ${strength}");
+        break;
+      case 1:
+        var statUp = 5;
+        offense += statUp;
+        print("${name}의 공격력이 ${statUp}만큼 올랐습니다. 현재 공격력: ${offense}");
+        break;
+      case 2:
+        var statUp = 5;
+        defence += statUp;
+        print("${name}의 방어력이 ${statUp}만큼 올랐습니다. 현재 방어력: ${defence}");
+        break;
+      default: break;
+    }
   }
 
   void attackMonster(Monster monster) {
@@ -47,12 +66,12 @@ class Character {
     damage = damage > 0 ? damage : 0;
 
     // 아이템 사용 확인
-    if(mode == 2){
+    if (mode == 2) {
       damage *= 2;
       print("강력한 공격을 행합니다.");
       mode = 0;
     }
-    
+
     monster.strength -= damage;
 
     print("$name이(가) ${monster.name}에게 $damage의 데미지를 입혔습니다.");
